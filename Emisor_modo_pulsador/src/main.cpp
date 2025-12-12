@@ -14,8 +14,8 @@
 uint8_t rx_mac_address[6] = {0xB4, 0xE6, 0x2D, 0x1A, 0x2B, 0xA5}; // Dirección del receptor
 uint8_t mensaje = 4;											  // Mensaje que se enviará al receptor
 #define MENSAJE_LLAVE 3
-#define MENSAJE_PULSADOR_OFF 4
-#define MENSAJE_PULSADOR_ON 5
+#define MENSAJE_PULSADOR_OFF 5
+#define MENSAJE_PULSADOR_ON 4
 
 size_t mensaje_tam = 1;
 #define pulsador 0
@@ -39,26 +39,24 @@ bool lectura_antirebote(int pin);
 void setup()
 {
 
-	// Inicializamos el monitor serie
+	/* Inicializamos el monitor serie en caso de debug
 	Serial.begin(115200);
 	Serial.println();
 	Serial.println("Hola Unitec");
+	*/
 
 	// Iniciamos el WIFI
 	WiFi.mode(WIFI_STA);
 	conexion = WifiEspNow.begin();
 
 	// Añadimos una conexión
-	WifiEspNow.addPeer(rx_mac_address, 0, nullptr);
+		while(conexion != true)
+	{
+		WifiEspNow.addPeer(rx_mac_address, 0, nullptr);
+		//Serial.println("No se pudo inicializar ESP NOW");
+	}
+		//Serial.println("Felicidades");
 
-	if (conexion != true)
-	{
-		Serial.println("No se pudo inicializar ESP NOW");
-	}
-	else
-	{
-		Serial.println("Felicidades");
-	}
 
 	pinMode(pulsador, INPUT);
 	pinMode(pulsador_modo, INPUT);
@@ -85,6 +83,14 @@ void loop()
 	{
 		modo = !modo;
 		digitalWrite(LED_BUILTIN, modo);
+			
+		//Apago el juguete cuando salgo del modo llave
+		if(mensaje == MENSAJE_LLAVE)
+			{		
+				mensaje = MENSAJE_PULSADOR_OFF;
+				WifiEspNow.send(rx_mac_address, (uint8_t *)&mensaje, mensaje_tam);
+			}
+			
 	}	
 
 	lectura_pulsador = lectura_antirebote(pulsador);
@@ -95,13 +101,13 @@ void loop()
 		{
 			mensaje = MENSAJE_PULSADOR_ON;
 			WifiEspNow.send(rx_mac_address, (uint8_t *)&mensaje, mensaje_tam);
-			Serial.println("Mensaje enviado: ON");
+			//Serial.println("Mensaje enviado: ON");
 		}
 		else if (lectura_pulsador == HIGH && lectura_pulsador_anterior != HIGH)
 		{
 			mensaje = MENSAJE_PULSADOR_OFF;
 			WifiEspNow.send(rx_mac_address, (uint8_t *)&mensaje, mensaje_tam);
-			Serial.println("Mensaje enviado: OFF");
+			//Serial.println("Mensaje enviado: OFF");
 		}
 	}
 	// Modo SWITCH
@@ -110,10 +116,9 @@ void loop()
 		if(lectura_pulsador == LOW && lectura_pulsador_anterior != LOW) // Leemos el estado del pulsador
 			{
 				mensaje = MENSAJE_LLAVE;
-				Serial.print("Estado del envio:");
+				//Serial.print("Estado del envio:");
 				chequeo_mensaje = WifiEspNow.send(rx_mac_address, (uint8_t *) &mensaje, mensaje_tam);
-				Serial.println(chequeo_mensaje);
-				//digitalWrite(LED_BUILTIN, HIGH);
+				//Serial.println(chequeo_mensaje);
 			}
 	}
 	lectura_modo_anterior = lectura_modo;
@@ -146,4 +151,5 @@ bool lectura_antirebote(int pin) { //funcion para evitar el rebote de los botone
   return estado;
 
 }
+
 
