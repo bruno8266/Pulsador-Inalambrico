@@ -126,8 +126,10 @@ void loop()
 	// Chequeamos el estado del envío
 	// estado_actual = WifiEspNow.getSendStatus();
 
-	/*	Serial.print("ESP Board MAC Address:  ");
-		Serial.println(WiFi.macAddress());*/
+	/*  Descomentar para leer la direccion MAC
+		Serial.print("ESP Board. Direccion MAC:  ");
+		Serial.println(WiFi.macAddress());
+	*/	
 }
 
 
