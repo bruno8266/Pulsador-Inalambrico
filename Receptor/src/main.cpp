@@ -6,6 +6,10 @@
 #include <Arduino.h>
 #include <WifiEspNow.h>
 
+#define MENSAJE_LLAVE 3
+#define MENSAJE_PULSADOR_OFF 5
+#define MENSAJE_PULSADOR_ON 4
+
 //rx_mac_adress = {B4, E6, 2D, 1A, 2B, A5}
 //tx_mac_adress = {CC, 50, E3, 07, 2D, 2F}
 
@@ -21,52 +25,56 @@ void
 printReceivedMessage(const uint8_t mac[WIFIESPNOW_ALEN], const uint8_t* buf, size_t count,
                      void* arg)
 {
-  Serial.printf("Message from %02X:%02X:%02X:%02X:%02X:%02X\n", mac[0], mac[1], mac[2], mac[3],
-                mac[4], mac[5]);
+  Serial.printf("Message from %02X:%02X:%02X:%02X:%02X:%02X\n", mac[0], mac[1], mac[2], mac[3],mac[4], mac[5]);
   for (int i = 0; i < (int) (count); ++i) {
     Serial.print( (buf[i]));
   }
 	Serial.println();
 
-	if(buf[0] == 3)
+	if(buf[0] == MENSAJE_LLAVE)
 	  	{
 			if(estado_led == false)
 			{
 				estado_led = true;
-				Serial.println("Modo LLAVE: Pulsador ON");
+				//Serial.println("Modo LLAVE: Pulsador ON");
 			}
 			else
 			{
 				estado_led = false;
-				Serial.println("Modo LLAVE: Pulsador OFF");
+				//Serial.println("Modo LLAVE: Pulsador OFF");
 			}
 		}
-	if(buf[0] == 4)
+	// Modo PULSADOR: pulsador ON
+	if(buf[0] == MENSAJE_PULSADOR_ON)
 	{
 		estado_led = true;
-		Serial.println("Modo PULSADOR: pulsador ON");
+		//Serial.println("Modo PULSADOR: pulsador ON");
 	}
-	if(buf[0] == 5)
+	// Modo PULSADOR: pulsador OFF
+	if(buf[0] == MENSAJE_PULSADOR_OFF)
 	{
 		estado_led = false;
-		Serial.println("Modo PULSADOR: pulsador OFF");
+		//Serial.println("Modo PULSADOR: pulsador OFF");
 	}
 		digitalWrite(LED_BUILTIN,estado_led);
 }
 
 void setup() {
 
- 	 // Inicializamos el monitor serie
+ 	 /* Inicializamos el monitor serie en caso de debugear
 	 Serial.begin(115200);
 	 Serial.println();
  	 Serial.println("Hola Unitec");
-	
+	*/
 	WiFi.mode(WIFI_STA);
 	WifiEspNow.onReceive(printReceivedMessage, nullptr);
+
 	conexion = WifiEspNow.begin();
   // Añadimos una conexión
-	WifiEspNow.addPeer(tx_mac_address, 0, nullptr);
-
+  		while(conexion != true){
+			WifiEspNow.addPeer(tx_mac_address, 0, nullptr);
+		}
+	/* En caso de debugear, descomentar
 	if(conexion != true)
 	{
 		Serial.println("No se pudo inicializar ESP NOW");
@@ -75,6 +83,7 @@ void setup() {
 	{
 		Serial.println("Felicidades");
 	}
+		*/
 	pinMode(LED_BUILTIN, OUTPUT);
 }
 
@@ -89,8 +98,8 @@ void loop() {
 
 */
 	
-/*
-	Serial.print("ESP Board MAC Address:  ");
+/*  Descomentar para leer la direccion MAC
+	Serial.print("ESP Board. Direccion MAC:  ");
  	Serial.println(WiFi.macAddress());
 */	
 }
