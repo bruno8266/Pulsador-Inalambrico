@@ -14,8 +14,6 @@
 //tx_mac_adress = {CC, 50, E3, 07, 2D, 2F}
 
 uint8_t tx_mac_address[6] = {0xCC, 0x50, 0xE3, 0x07, 0x2D, 0x2F};
-uint8_t mensaje = 3;
-size_t mensaje_tam = sizeof(mensaje);
 
 bool conexion = false;
 
