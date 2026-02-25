@@ -1,1 +1,21 @@
 # Pulsador-Inalambrico
+
+## Introducción
+
+Este proyecto es un SWITCH ON/OFF inalámbrico basado en ESP-01, para el manejo de un juguete a distancia.
+
+[![](https://img.plantuml.biz/plantuml/dsvg/PKyz2i8m5DxVAHxTKx6ZWvI27HmQ4RVY499d3JH9JLvEvX6yc4Ge5Do-V_ZQn2foTZE0zKpneJHXrGKE7kMmatrVeKhOoTl-Fs084ysajVsyVym54zPy0r1QA70yEPj2l1VUeCZBHbe1rj5EJwwFE5v9qy95E-15lJ8nbMsZE2JOk0BFUIekG4lUb0zV)](https://editor.plantuml.com/uml/PKyz2i8m5DxVAHxTKx6ZWvI27HmQ4RVY499d3JH9JLvEvX6yc4Ge5Do-V_ZQn2foTZE0zKpneJHXrGKE7kMmatrVeKhOoTl-Fs084ysajVsyVym54zPy0r1QA70yEPj2l1VUeCZBHbe1rj5EJwwFE5v9qy95E-15lJ8nbMsZE2JOk0BFUIekG4lUb0zV)
+
+El emisor posee un botón de encendido y apagado del juguete, y un selector de modo entre PULSADOR y LLAVE:
+- El modo PULSADOR enciende el juguete solo cuando se mantiene presionado el botón
+- El modo LLAVE cambia el estado entre ON/OFF con un solo toque del botón
+
+## Programación de los ESP-01
+Para la programación de los ESP-01 se utiliza Platformio IDE.
+Los archivos de código del Emisor y del Receptor se encuentran en las carpetas:
+- Emisor_modo_pulsador
+- Receptor
+
+## Circuito del Emisor
+
+## Circuito del Receptor 
