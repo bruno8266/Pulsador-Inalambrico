@@ -30,3 +30,10 @@ De todas maneras se podría reemplazar el MCP1700 por uno similar (XC6206, BA33B
 ### Circuito del Receptor 
 ![Circuito_Receptor](https://github.com/user-attachments/assets/c992bed3-6ac1-4c99-918b-60443d1fe238)
 El optoacoplador U2 y el transistor Q1 que manejan al juguete se pueden alternar por un relé.
+
+## Gabinete
+Para agrupar todos los componentes se diseñó un gabinete en FreeCAD. El archivo está disponible como ``Pulsador inalambrico.FCStd``
+
+![gabinete_2](https://github.com/user-attachments/assets/20e335f7-a792-4bb8-8261-4e34af6cf442)
+
+
