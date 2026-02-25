@@ -16,6 +16,17 @@ Los archivos de código del Emisor y del Receptor se encuentran en las carpetas:
 - Emisor_modo_pulsador
 - Receptor
 
-## Circuito del Emisor
+## Circuitos 
+Los circuitos de emisión y recepción para este proyecto se encuentran en esta sección. Están diseñados utilizando:
+- Batería de litio
+- Módulo de carga
+- Reguladores de 3.3V con baja caída de tensión MCP1700
+- ESP01
+De todas maneras se podría reemplazar el MCP1700 por uno similar (XC6206, BA33BC0, etc.), al igual que el ESP-01 por otro que también esté basado en el ESP8266
 
-## Circuito del Receptor 
+### Circuito del Emisor
+![Circuito_Emisor](https://github.com/user-attachments/assets/1cabc958-4f55-4b9e-a1a9-92c4ed5a54d6)
+
+### Circuito del Receptor 
+![Circuito_Receptor](https://github.com/user-attachments/assets/c992bed3-6ac1-4c99-918b-60443d1fe238)
+El optoacoplador y el transistor que manejan al juguete se pueden alternar por un relé.
