@@ -16,6 +16,37 @@ Los archivos de código del Emisor y del Receptor se encuentran en las carpetas:
 - Emisor_modo_pulsador
 - Receptor
 
+Para emparejar dos ESP se deben obtener sus direcciones MAC,  descomentando la sección de código que inicia el puerto serie y la que muestra la dirección MAC:
+```
+void setup()
+{
+	/* Inicializamos el monitor serie en caso de debug
+	Serial.begin(115200);
+	Serial.println();
+	Serial.println("Hola Unitec");
+	*/
+
+//Código del emisor o receptor
+//...
+}
+
+void loop()
+{
+//Código del emisor o receptor
+//...
+
+	/*  Descomentar para leer la direccion MAC
+		Serial.print("ESP Board. Direccion MAC:  ");
+		Serial.println(WiFi.macAddress());
+	*/
+}
+```
+Las direcciones se modifican en las variables globales correspondientes:
+```
+uint8_t tx_mac_address[6] = {0xCC, 0x50, 0xE3, 0x07, 0x2D, 0x2F}; // Dirección del emisor
+uint8_t rx_mac_address[6] = {0xB4, 0xE6, 0x2D, 0x1A, 0x2B, 0xA5}; // Dirección del receptor
+```
+
 ## Circuitos 
 Los circuitos de emisión y recepción para este proyecto se encuentran en esta sección. Están diseñados utilizando:
 - Batería de litio
